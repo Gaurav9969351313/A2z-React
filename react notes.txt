@@ -1,0 +1,1649 @@
+npm i semantic-ui-css prettier
+ESlint (vsx)
+.eslintrc
+{"extends":"react-app"}
+
+npm i prettier
+
+emmet
+.ui.card>.image+.content
+
+
+vs code extentions
+es7-react-js-snippets
+
+https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+
+user settings of vs code ctrl + shift + p
+{
+    "workbench.colorTheme": "Visual Studio Dark",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSaveTimeout": 100,
+    "editor.formatOnSaveTimeout": 100,
+    "files.autoSave": "afterDelay",
+    "editor.fontFamily": "'Fira Code',Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "emmet.syntaxProfiles": {
+        "javascript": "jsx",
+        "xml": {
+            "attr_quotes": "single"
+        }
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+}
+
+
+npmjs 
+react npx
+
+github.com/facebook/react-create-app
+
+npm install create-react-app -g
+create-react-app contactmanager
+cd contactmanager
+code .
+npm start
+
+localhost:3000
+
+npm run build
+
+react-scripts ==> webpack and all
+
+react-dom ==> rendering ain application component
+
+index.js
+ReactDOM.render(<App/>,document.getEmlementById("Root"));
+
+app.js
+import React, {Component} from React;
+
+class App extends Component { //React.Component
+	render(){
+		
+	}
+}
+
+JSX:
+HTML in js
+
+className
+htmlFor 
+<input type="text" />
+</br>
+
+binding {  }
+
+
+rcc -- create comp
+rfc -- function--static markup
+impt -- import prop-types
+
+if import is not their that means its not default imported
+
+class component and function components 
+we want to pass data from one component to other component using props
+
+in class we have to bind like this.props.name
+const {name, email,phone} = this.props;
+
+in functional component --> put props as a function parameter
+
+
+difference between class and function is that class has a render function
+---------------------------------------------------------------------------------
+
+1) Parent to child
+---------------
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Header headerName="Contact Manager"/>
+        <Contact />
+      </div>
+    );
+  }
+}
+
+
+const Header = (props) => { 
+    return (
+      <div className="header">
+        <h3>{props.headerName} </h3>
+      </div>
+    )
+}
+
+-------------------------------------------------------------------------
+Contacts.js (P)
+-------------
+<div className="a">
+              {contacts.map(c => (
+                  //name={c.name} phone={c.phone} email={c.email}
+                  <Contact deleteClickHandler={this.deleteContact.bind(this,c.id)} key={c.id} contact={c}/>
+              ))}
+        </div>
+
+deleteContact = (id) => { 
+        console.log("inside deleteContact " + id);
+        
+        const newCOntacts = this.state.contacts.filter(contact => contact.id !== id);
+        this.setState({contacts:newCOntacts})
+    }
+
+Contact.js (C)
+--------------
+<i className="fas fa-times" style={{ cursor: 'pointer', float: 'right', color: 'red' }} onClick={this.onDeleteClick.bind(this,contact.id)} ></i>
+
+
+    onDeleteClick = (id) => { 
+        this.props.deleteClickHandler();
+    }
+
+
+Contact.propTypes = {
+    contact: PropTypes.object.isRequired,
+    deleteClickHandler: PropTypes.func.isRequired
+}
+---------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Header headerName="Contact Manager"/>
+        <Contact name="Kajal Talele" email="kajal17talele@gmail.com" phone="986908991"/>
+      </div>
+    );
+  }
+}
+
+export class Contact extends Component {
+  render() {
+    return (
+      <div>
+            <h4>Name:{this.props.name}</h4>
+            <ul>
+                <li>Email: {this.props.email}</li>
+                <li>Phone No: {this.props.phone}</li>
+            </ul>
+      </div>
+    )
+  }
+}
+
+ const { name,phone,email } = this.props;
+    
+    return (
+      <div>
+            <h4>Name:{name}</h4>
+            <ul>
+                <li>Email: {email}</li>
+                <li>Phone No: {phone}</li>
+            </ul>
+      </div>
+    )
+
+
+------------------------------------------------------------------
+
+Header.defaultProps = {
+    headerName: "This Is Default Header"
+}
+
+//impt
+import PropTypes from 'prop-types';
+
+Header.propTypes = {
+    headerName: PropTypes.string.isRequired
+}
+
+
+-------------------------------------------------------------
+
+passing parameter without "" 
+
+passing parameter as an Object
+
+<div className="a">
+              {contacts.map(c => (
+                  //name={c.name} phone={c.phone} email={c.email}
+                  <Contact key={c.id} contact={c}/>
+              ))}
+        </div>
+
+
+
+---------------------------------
+
+BInding This 
+1)
+constructor() { 
+        super();
+        this.state = {};
+
+        this.onShowClick = this.onShowClick.bind(this);
+    }
+
+   <h4>
+                Name:{contact.name}
+                <i className="fas fa-sort-down" onClick={this.onShowClick}> icon </i>
+            </h4>
+
+---------------------------------
+
+2)
+state = {};
+    
+    onShowClick = () => {
+        console.log(this.state);
+    }
+
+
+--------------------------------------------------------------------------
+passing parameter to a  function
+
+<i className="fas fa-sort-down" onClick={this.onShowClick.bind(this,1)}> icon </i>
+
+state = {};
+    
+    onShowClick = (id,e) => {
+        console.log(this.state);
+        console.log(e);
+         console.log(id);
+    }
+--------------------------------------------------------------------------
+Empty div replace it
+<React.Fragment> </React.Fragment>
+
+
+--------------------------------------------------------------------------
+
+
+this.state.showContactInfo = !this.state.showContactInfo;
+        this.setState({
+            showContactInfo:true
+        });
+
+
+--------------------------------------------------------------------------
+
+  	    {
+                showContactInfo ? (<ul className="list-group">
+                <li className = "list-group-item">Email: {contact.email}</li>
+                <li className = "list-group-item"> Phone No: {contact.phone} </li>
+           	</ul>) :null
+            }
+
+-------------------------------------------------------------------------------------------------
+Experiment 10:
+
+import React, { Component } from 'react';
+import './App.css'
+
+class App extends Component {
+	render() {
+		return (
+			<div className="App">
+				<h1> This is react app </h1>
+			</div>
+
+		)
+	}
+}
+
+or inside render element :
+
+return React.createElement('div', { className: 'App' });
+-------------------------------------------------------------------------------------------------
+Experiment 11: Folder Structure
+
+Person/Person.js
+.................
+
+import React from 'react'
+
+const person = () => {
+	return <p> I am a Person </p>
+};
+
+export default person;
+
+app.js
+......
+
+import Person from 'Person/Person'
+
+<Person> </Person>
+
+<Person />
+
+-------------------------------------------------------------------------------------------------
+Experiment 12: Outputting Some Dynamic Content
+
+Person/Person.js
+.................
+
+import React from 'react'
+
+const person = () => {
+	return <p> I am a Person, and i am { Math.floor(Math.random*30) } </p>
+	<!-- Inrerpreted as a js code -->
+};
+
+export default person;
+
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 13: Pass Data From Parnet To Child
+
+App.js
+......
+<Person name="max" age="28" /> 
+
+Person/Person.js
+.................
+
+import React from 'react'
+
+const person = (props) => {
+	return <p> I am a { props.name }, and i am in { props.age } age. </p>
+};
+
+export default person;
+
+-------------------------------------------------------------------------------------------------
+Experiment 14: Children Property
+
+App.js
+......
+
+state = {
+	persons: [
+		{ name: 'Guarav', age: 27 },
+		{ name: 'Kajal', age: 22 },
+		{ name: 'Yashwant', age: 52 },
+		{ name: 'Rekha', age: 48 }
+	]
+}
+
+render() {
+	return (
+		<div className="App"> 
+			<Person name="max" age="28" > My Hobbies: Racing </Person>
+			<Person name={this.state.persons[0].name} age={this.state.persons[0].age} ></Person>
+		</div>
+	)
+}
+ 
+
+Person/Person.js
+.................
+
+import React from 'react'
+
+const person = (props) => {
+	return (
+		<div>
+		 <p> I am a { props.name }, and i am in { props.age } age. </p>
+		 <p> { props.children } </p> 
+		 <!-- here we will recive My Hobbies: Racing from parent -->  
+		</div>
+		)
+};
+
+export default person;
+................................
+one special property you can define in any component named (state) which is managed by inside of the component.
+
+state is a reserved word
+-------------------------------------------------------------------------------------------------
+Experiment 15: Listen The Events
+
+<button onClick={this.switchNameHandler}>Click Me</button>
+if you put parentheis {this.switchNameHandler()} it will execute as soon as the component is rendered
+
+switchNameHandler() {
+
+	// this.state.peresons[0].name = "maxmillan"; // dont do that as it gives warning
+	// it wont take any effect 
+
+	this.setState({ persons: [
+		{ name: 'Maxmillian', age:28 },
+		{ name: 'Manu', age: 29 }
+	] }); 
+	console.log('switchNameHandler Clicked');
+}
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 16: Functional vs Class Components ( Stateful vs Stateless )
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 17: passing method references to the components 
+
+app.js
+......
+<Person name="gaurav" age="21" click={ this.switchNameHandler }> </Pereon> 
+<!-- we are passing click as a reference to person -->
+
+Person.js
+.........
+<p onClick={props.click}> i am {props.name} and i am in {props.age} age.
+
+-------------------------------------------------------------------------------------------------
+Experiment 18: Pass The Paramters to function
+
+<button onClick={this.switchNameHandler.bind(this, 'Maxmillian')}>Click Me</button> 
+
+<Person name="gaurav" age="21" click={ this.switchNameHandler.bind(this, 'Max!')} }> </Pereon> 
+<!-- we are passing click as a reference to person -->
+
+switchNameHandler(newName) {
+	this.setState({ persons: [
+		{ name: newName, age:28 } 
+	]
+	});
+
+Alternative
+...........
+
+<button onClick= { () => this.switchNameHandler('Maxmillian')}>Click Me</button> 
+
+in this case it wont get executed  while component rendering. now an annonious function get executed onClick of that function 
+
+-------------------------------------------------------------------------------------------------
+Experiment 19: Two Way Binding
+
+<input type="text" onChange={}> 
+<Person name="gaurav" age="21" click={ this.switchNameHandler.bind(this, 'Max!')} }  changed={this.nameChangeHandler} > </Pereon> 
+
+nameChangeHandler(event) {
+	this.setState({ persons: [
+			{ name: event.target.value, age:28 } 
+		]
+	});
+}
+
+Person.js
+...........
+<input type="text" onChange={props.changed} value={props.name}> 
+
+-------------------------------------------------------------------------------------------------
+Experiment 20: Adding Styling with Stylesheets
+
+render() {
+	const style = {
+		backgoundColor: 'grey'
+	}
+
+	return (
+		<div className="App">
+			<button style={style}> Click Me </button>
+		</div>
+	)
+}
+
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 21: Rendering Lists & Conditional Content
+
+
+class App extends Component {
+	state: {
+		persons: [
+			{ name: 'Gaurav', age: 27 }
+		],
+		showPerson : false
+	}
+
+	togglePersonHandler() {
+		const isShowOn = this.state.showPerson;
+		this.setState({
+			this.state.showPerson = !isShowOn	
+		})
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<button onClick={ this.togglePersonHandler }> Toggle </button>
+
+				{
+					this.state.showPerson ? <Person name={ this.state.persons[0].name } age={ this.state.persons[0].age } /> : null
+				}
+			</div> 
+		)
+	} 
+}
+
+...............
+| ALTERNATIVE | + Outputting A List 
+...............
+
+class App extends Component {
+	state: {
+		persons: [
+			{ name: 'Gaurav', age: 27 },
+			{ name: 'Yashwant', age: 52 }
+		],
+		showPerson : false
+	}
+
+	let persons = null;
+
+	nameChangedHandler(e, id) {
+		const personIndex = this.state.persons.findIndex( p=> {
+			return   = id
+		} );
+		
+		const person = Object.assign({}, this.state.persons[personIndex]); //this.state.persons[personIndex]
+		person.name = e.target.value;
+		const persons = [...this.state.persons];
+		persons[personIndex] = person;
+
+		this.setState({ persons:persons });
+	}
+
+	if (this.state.showPersons) {
+		// persons = (
+		//	 <Person name={ this.state.persons[0].name } age={ this.state.persons[0].age } /> 
+		// )
+		
+		// Waring each child in an array or iterator should have a unique 'key' prop
+		persons = (
+			<div>
+				{
+					this.state.persons.map((person, index) => {
+						return <Person 
+								key={ person.id } 
+								click={() => this.deletePersonHandler(index) } 
+								changed={ (event)=>this.nameChangedHandler(event, person.id) }
+								name={ person.name } age= { person.age } > 
+							</Person>
+					})
+				}
+			</div>
+		)
+	}
+
+	deletePersonHandler(index) {
+		// const p = this.state.persons.slice();
+		const p = [...this.state.persons] // returns new copy of an array
+		p.splice(index, 1);
+		this.setState({ persons: p })
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<button onClick={ this.togglePersonHandler }> Toggle </button>
+				{ persons }
+			</div> 
+		)
+	} 
+}
+
+-------------------------------------------------------------------------------------------------
+Experiment 22: Dynamic Bind Class
+
+<p className={classes}> Hello  </p>
+
+let classes = ["red", "bold"].join(" ");
+
+OR
+
+var classes = [];
+
+if(this.state.persons.length <= 2) {
+	classes.push("red");
+}
+else if( this.state.persons.length <=1) {
+	classes.push("bold");
+} 
+
+<p className={classes.join(' ')}> Hello  </p>
+
+-------------------------------------------------------------------------------------------------
+Experiment 23: npm install --save radium 
+
+app.js
+......
+
+import Radium from 'radium'
+
+render() {
+	const style = {
+		baackgroundCOlor: #ccc;
+		:hover: {
+			backgroudColor: 'lightgreen',
+			color: 'black'
+		}
+	}
+}
+
+export default Radium(App);
+
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 24: React Lifecycle Hooks
+
+available in statefull componets only.
+
+Default ES6 Class Feature : constructor(props) >> call super(props) and set up state 
+			    componentWillMount() >> update state and do last min optimizations
+
+				render() 	>> prepare & structure your jsx code
+			   render Child Components
+				componentDidMount() >> update state triggers reRender()
+
+App.js
+......
+
+constructor(props) {
+	super(props) // it should be their	
+	console.log('inside constructor', props);
+
+	// also you can initialize the state here  
+		
+	this.state = {
+		otherValue: 'Hello '	
+	}
+		
+}
+
+componentWillMount() {
+	console.log('componentWillMount called');
+}
+
+render() {
+	console.log('inside render');
+}
+
+componentDidMount() {
+	console.log('componentDidMount called');
+}
+
+lets suppose child component is also called in the root component (app.js)
+while rendering child component state is being chnaged so render() called second time/ retriggered
+-------------------------------------------------------------------------------------------------
+Experiment 25:
+update triggerd by parent >> because of change in props 
+internally triggerd update >> because of change in state 
+
+componentWillReceiveProps(nextProps) {  // we can sync local state of component 
+
+}
+
+shouldComponentUpdate(nextProps, nextState) { // may cancel updateing process 
+	// return true; // updateing continues
+	// return false; // cancel update // will not call app.js ka render again
+	// return nextProps.persons !== this.props.persons;
+}
+
+componentWillUpdate(nextProps, nextState) { // sync state to props
+
+}
+
+render() {
+
+}
+
+update all child component props
+
+componentDidUpdate() {
+
+}
+
+........................... Update Triggerd By Parent ends ...........................
+
+,,,,,,,,,,,,,,,,,,,,,,,,,,, Update Triggered By Internal props change Starts Here ,,,,,,,,,,,,,,,,,,,
+
+willReceiveProps() wont be called here is the only change here
+
+shouldComponentUpdate(nextProps, nextState) { // may cancel updateing process 
+	// return true; // updateing continues
+	// return false; // cancel update // will not call app.js ka render again
+	// return nextProps.persons !== this.props.persons;
+}
+
+componentWillUpdate(nextProps, nextState) { // sync state to props
+
+}
+
+render() {
+
+}
+
+update all child component props
+
+componentDidUpdate() {
+
+}
+
+-------------------------------------------------------------------------------------------------
+Experiment 26: Performance gain in pure components
+
+elements >>> three dots >> rendering >> check the checkbox Paint flashing
+
+https://alligator.io/react/performance-boost-purecomponent/
+
+-------------------------------------------------------------------------------------------------
+Experiment 27: How React Updates DOM
+
+react keeps two copies of the dom. old VD.and re rendered VD.
+while re rendering dom componentWillUpate to componentDidMount Hooks Are called.
+now react makes a a VD comparison and check for the differneces.
+
+if the differences are found.
+it will reaches out to the real dom and updates it.in the same case it doesnt re render the real dom entirely.
+
+it only changes the things where the changes are detected.
+
+if no differences are found it wont touch the real dom.
+
+accessing the dom is really slow.
+
+-------------------------------------------------------------------------------------------------
+Experiment 28: Returning the adjustant elemets.
+to retun the adjustant element we need to create a heigher order component. 
+
+Hoc >> Aux.js
+..............
+
+import React from 'react';
+
+const aux = (props) => {
+	return props.children
+}  
+
+export default aux;
+
+cockpit.js
+..........
+
+import Aux from '../../hoc/aux'
+
+return (
+	<Aux> 
+		<h1> { props.appTitle } </h1>
+		<p> this is good </p>
+	</Aux>
+	
+)
+
+-------------------------------------------------------------------------------------------------
+Experiment 29: Passing unknown props 
+
+
+Hoc >> WithClass.js
+....................
+const withClass = (WrappedComponent, className) => {
+    return (props) => (
+        <div className={className}>
+            <WrappedComponent {...props} />
+        </div>
+    )
+}
+
+const withClass = (WrappedComponent, className) => {
+    return class extends Component {
+        render () {
+            return (
+                <div className={className}>
+                    <WrappedComponent {...this.props} />
+                </div>
+            )
+        }
+    }
+}
+
+export default withClass
+
+app.js
+......
+
+
+import React, { PureComponent } from 'react';
+
+import classes from './App.css';
+import withClass from '../hoc/withClass';
+
+class App extends PureComponent {
+  constructor( props ) {
+    super( props );
+   }
+}
+
+export default withClass( App, classes.App );
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 30: Pure Components
+
+Containers >> app.js
+....................
+import React, { PureComponent } from 'react';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+
+
+class App extends PureComponent {
+  constructor( props ) {
+    super( props );
+    console.log( '[App.js] Inside Constructor', props );
+    this.state = {
+      persons: [
+        { id: 'asfa1', name: 'Max', age: 28 },
+        { id: 'vasdf1', name: 'Manu', age: 29 },
+        { id: 'asdf11', name: 'Stephanie', age: 26 }
+      ],
+      otherState: 'some other value',
+      showPersons: false
+    };
+  }
+
+ render () {
+    console.log( '[App.js] Inside render()' );
+    let persons = null;
+
+    if ( this.state.showPersons ) {
+      persons = <Persons
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} />;
+    }
+
+
+    return (
+      <div className={classes.App}>
+        <button onClick={() => { this.setState( { showPersons: true } ) }}>Show Persons</button>
+        <Cockpit
+          appTitle={this.props.title}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler} />
+        {persons}
+      </div>
+    );
+  }
+}
+
+
+Persons.js
+..........
+import Person from './Person/Person';
+
+class Persons extends PureComponent {
+    constructor( props ) {
+        super( props );
+        console.log( '[Persons.js] Inside Constructor', props );
+    }
+  render () {
+        console.log( '[Persons.js] Inside render()' );
+        return this.props.persons.map( ( person, index ) => {
+            return <Person
+                click={() => this.props.clicked( index )}
+                name={person.name}
+                age={person.age}
+                key={person.id}
+                changed={( event ) => this.props.changed( event, person.id )} />
+        } );
+    }
+}
+
+export default Persons;
+
+
+Person.js
+..........
+
+import React, { Component } from 'react';
+
+import classes from './Person.css';
+
+class Person extends Component {
+    constructor( props ) {
+        super( props );
+        console.log( '[Person.js] Inside Constructor', props );
+    }
+
+ render () {
+        console.log( '[Person.js] Inside render()' );
+        return (
+            <div className={classes.Person}>
+                <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
+                <p>{this.props.children}</p>
+                <input type="text" onChange={this.props.changed} value={this.props.name} />
+            </div>
+        )
+    }
+}
+
+export default Person;
+
+.......................................................
+cockpit.js
+..........
+import React from 'react';
+
+import classes from './Cockpit.css';
+
+const cockpit = ( props ) => {
+    let btnClass = '';
+    if (props.showPersons) {
+        btnClass = classes.Red;
+    }
+    
+    return (
+        <div className={classes.Cockpit}>
+            <h1>{ props.appTitle }</h1>
+            <button
+                className={btnClass}
+                onClick={props.clicked}>Toggle Persons</button>
+        </div>
+    );
+};
+
+export default cockpit;
+
+-------------------------------------------------------------------------------------------------
+Experiment 31: Heigher Order Components 
+
+Hoc >> WithClass.js
+...................
+
+import React from 'react';
+
+const withClass = (props) => (
+    <div className={props.classes}>
+        {props.children}
+    </div>
+);
+
+export default withClass;
+
+...............................................
+
+import WithClass from '../hoc/WithClass';
+
+class App extends PureComponent { 
+
+
+ if ( this.state.showPersons ) {
+      persons = <Persons
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} />;
+    }
+
+    return (
+      <WithClass classes={classes.App}>
+        <button onClick={() => { this.setState( { showPersons: true } ) }}>Show Persons</button>
+        <Cockpit
+          appTitle={this.props.title}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler} />
+        {persons}
+      </WithClass>
+    );
+
+}
+
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 32: Using setState Correctly
+
+togglePersonHandler() {
+	this.setState((prevState, props) => { 
+		return {
+			showPersons: !this.state.showPersons,
+			toggleClicked: prevState.toggleClicked + 
+		}
+	})
+}
+
+-------------------------------------------------------------------------------------------------
+Experiment 33: Validating Props
+
+npm i --save prop-types
+
+person.js
+.........
+
+import PropTypes from 'prop-types'
+
+after class 
+
+<ClassName>.propTypes = {
+	click: PropTypes.func, 
+	name: PropTypes.string,
+	age: PropTypes.number,
+	changed: PropTypes.func
+}
+
+if failed to wrong prop in dev tools we will get warning
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 34: Use of Ref 
+
+when we want to focus into text input whenever we render it to the screen.
+ref available in stateful components only which extends component
+
+componentDidMount() {
+	this.inputElement.focus();
+}
+
+<input type="text" ref={ (inp) => { this.inputElement = inp } } />
+
+or
+
+<input type="text" ref={ this.inputElement } />
+
+componentDidMount() {
+	this.inputElement.current.focus();
+}
+constructor() {
+	this.inputElement = React.createRef();
+}
+
+-------------------------------------------------------------------------------------------------
+Experiment 35: Forworded Ref
+
+const withClass = (WrappedComponent, className) => {
+    const WithClass = class extends Component {
+        render () {
+            return (
+                <div className={className}>
+                    <WrappedComponent ref={this.props.forwardedRef} {...this.props} />
+                </div>
+            )
+        }
+    }
+
+    return React.forwardRef((props, ref) => {
+        return <WithClass {...props} forwardedRef={ref} />
+    });
+}
+
+
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 36: Context API 
+
+passing global state around your app.
+
+cockpit.js
+..........
+
+<button onClick={ props.login }> LogIn </button>
+
+// on click of this button a global state set to the true and change to be reflected in other component.
+
+
+App.js
+......
+
+state =  {
+	authenticated: false
+}
+
+loginHandler() {
+	this.setState({ authenticated: true })
+}
+
+<Cockpit appTitle={ this.props.title } login={this.loginHandler}  clicked={this.togglePersonHandler} </cockpit>
+
+<Persons persons={this.state.persons} clicked={ this.deletePersonHandler } isAuthenticated={this.state.authenticated} />
+
+Persons.js
+.........
+<Person click= { () => { this.props.clicked() } } authenticated= { this.props.isAuthenticated } </Person>
+
+Person.js
+.........
+
+{ this.props.authenticated ? <p> I am Authenticated </p>: null  }
+...................................................................................
+| Or By UsingContext API |
+..........................
+app.js
+......
+export const AuthContect = React.createContext(false);
+
+<AuthContect.provider value={this.state.authenticated}>
+	{ persons }
+</AuthContect.provider>
+
+Person.js
+..........
+
+import { AuthContext } from '../../../containers/app';
+
+<AuthContext.consumer>
+	{ auth => auth ? <p> I am Authenticated </p>: null  }
+</AuthContext.consumer>
+
+now to access the context by an other mathod
+............................................
+
+The first method is through Class.contextType.
+
+To use this method, we assign the context object from our ThemeContext to contextType property of our class. After that, we will be able to access the context value using this.context. You can also reference this in any of the lifecycle methods and even the render method.
+
+import ThemeContext from "../Context/ThemeContext";
+import AppTheme from "../Colors";
+
+class Main extends Component{
+    constructor(){
+        super();
+    }
+    static contextType = ThemeContext;
+    render(){
+        const currentTheme = AppTheme[this.context];
+        return(
+            <main></main>
+        );
+    }
+
+}
+
+-------------------------------------------------------------------------------------------------
+Experiment 37:
+
+discourage to use these lifecycle hooks
+ 
+componentWillUpdate() / componentWillReceiveProps() / componentWillMount() 
+
+// this hook will call after change in props 
+static getDerivedStateFromProps(nextProps, prevState) {
+	
+	return newState / prevState;
+}
+
+// get snapshot of dom right before they are about to change 
+getSnapshotBeforeUpdate() {
+
+}
+
+Constructor() >> static getDerivedStateFromProps(nextProps, prevState) >> render() >> componentDidMount() 
+
+Constructor() >> Repaint By Updating >> getSnapshotBeforeUpdate() >> ComponentDidMount()
+
+
+
+useState is a Hook that allows you to have state variables in functional components. 
+There are two types of components in React: class and functional components.
+
+It allows you to add state to your functional components. Using the useState hook inside a function component,
+you can create a piece of state without switching to class components.
+
+
+import { useState } from 'react';
+
+function Example() {
+    // Declare a new state variable, which we'll call "count"
+    const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+...................................
+import { useState } from 'react';
+
+const initialExpenses = [
+  {id: uuid(), charge:"pocket money", amount: 200},
+  {id: uuid(), charge:"housing loan", amount: 10000},
+  {id: uuid(), charge:"car payment", amount: 1212},
+]
+
+
+function app() {
+	console.log(useState());
+	const [expenses, setExpenses] = useState(initialExpenses);
+}
+
+<h1>Total Spending: { expenses.reduce((acc, expense) => { return (acc += expense.amount) ;}, 0) }  </h1>
+-------------------------------------------------------------------------------------------------
+Experiment 38:Http Support In React
+
+npm install --save axios
+
+componentDidMount() is a best way to cause a sideeffects for updating states and hence trigger the re render.
+
+
+blog.js
+........
+
+state  = {
+	posts: [],
+	selectedPostId: null
+}
+
+componentDidMount() {
+	axios.get('https://jsonplaceholder.typecode.com/posts').then((d)=>{
+		this.setState({ posts: d["data"] })
+	})
+}
+
+postSelectedHandler(id) {
+	this.setState({ selectedPostId: id })
+}
+
+const posts = this.state.posts.map( (post) => { 
+	return <post title={ post.title } clicked= { ()=> { this.postSelectedHandler(post.id) } }/>	
+ } )
+
+
+<fullPost id= { this.state.selectedPostId } />
+
+
+fullpost.js
+...........
+
+state = {
+	loadedPost : null,
+	error:false
+}
+
+if(this.props.id) {
+	render fullpost	
+
+	let posts = <p style={{ textAlign: 'center' }}> Something Went Wrong </p>
+		
+	if (!this.state.error) {
+		posts = <h1> { this.state.loadedPost.title } </h1>  
+	}
+
+
+}
+
+componentDidUpdate() {
+	if (this.props.id) {
+		if ((!this.state.loadedPost || this.state.loadedPost) && this.state.loadedPost.id !== this.props.id) { 
+			// THIS IF CONDITION REQUIED ELSE INFINITE LOOP WILL BE TRIGGERED AND LOTS OF REQUESTS SENT TO THE SERVER.
+			axios.get().then((d)=>{
+				this.setState({ loadedPost: d.data });
+				console.log(d.data)
+			}).catch((error)=>{
+				this.setState({ error: true });
+			})
+		}
+		
+	}
+}
+
+post.js
+........
+
+import React from 'react'
+
+const post = (props) => {
+	<article className="post" onClick={ props.clicked }> 
+		<h1> { props.title } </h1>
+	</article>
+}
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 39: Global Interceptors 
+
+index.js
+........
+
+import axios from 'axios';
+
+axios.defaults.baseUrl = 'http://jsonplaceholder.typicode.com'
+axios.defaults.headers.common['Authorization'] = 'AUTH Token';
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+
+
+axios.interceptos.request.use((req) => {
+	console.log(req);
+	
+	// edit request config
+	return req;
+}, error=> {
+	console.log(error);
+	return Promise.reject(error);
+});
+
+axios.interceptors.response.use((res)=> {
+		console.log(req);
+	
+	// edit response config
+	return req;
+	
+}, error=> {
+	console.log(error);
+	return Promise.reject(error);
+});
+
+
+
+-------------------------------------------------------------------------------------------------
+Experiment 40: Routing
+
+npm install --save react-router react-router-dom
+
+.Posts ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.Posts li {
+	display: inline-block;
+}
+
+.Posts a {
+	text-decoaration: none;
+	color: black;
+}
+
+<div>
+	<header>
+		<nav> 
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/new-post">new post</a></li>
+			</ul>
+		</nav>
+ 	</header>
+</div>
+
+
+app.js
+......
+
+import { BrowserRouter } from 'react-router-dom';  
+
+
+return (
+	<BrowserRouter> 
+
+		<div className="App">
+ 			<Blog />
+		</div>
+	</BrowserRouter>
+);
+
+.......................................................
+
+import { Route } from 'react-router-dom'
+
+<Route path="/" exact render={()=> <h1>Home</h1> } />
+<Route path="/" render={()=> <h1>Home 2</h1> } />
+
+now when we will go / we will see home and home 2 also 
+but when we go another route we will not see Home because of exact
+
+........................................................
+
+render component on route match
+
+
+<Route path="/" exact component={ Posts }> <!-- refernece to the class 
+
+...........................................................
+
+switching between pages
+
+<Route path="/" exact component={ Posts }> <!-- refernece to the class 
+<Route path="/new-posts" exact component={ NewPost }>
+
+
+now its switching the components but the whole page is being refreshed and we dont want it.
+
+to avoid this behavior
+
+import { Route, Link } from 'react-router-dom'
+
+	<header>
+		<nav> 
+			<ul>
+				<li><Link to='/'>Home</Link></li>
+				<li><Link to='/new-post'>new post</Link></li>
+			</ul>
+		</nav>
+ 	</header>
+
+
+<Link to={{ 
+	pathName: '/new-post',
+	hash: '#submit',
+	search: ?quickQueryParams=true
+}}> New Post </Link>
+
+now it will jump to id that we have in the loading component.
+
+..............................................................
+
+.... Routing related props 
+
+componentDidMount() {
+	console.log(this.props);
+	{
+		match: 
+		location: 
+		history:
+	}
+}
+
+props with match location and history is been logged in console only if the component is statefull, stateless components wont get these props.
+
+
+if the functional/stateless component is their 
+
+import { withRouter } from 'react-router-dom';
+ 
+const post = (props) => {
+	<html content to render>	
+}
+
+export default withRouter(post);
+
+now router is been attached to stateless components too.
+
+.........................................................
+Absolute vs Relative Path:
+.........................
+relative path : if you want to build the link from previous route you can use
+
+<link to={{ pathName:this.props.match.url + '/newPost'  }}>New Post</Link>
+
+simple to will genrate absolute path 
+to make it a relative path you can definately do use this.props.match.url 
+
+styleing active route 
+.....................
+import { Route, NavLink } from 'react-router-dom' 
+
+convert Link to NavLink
+
+<NavLink activeClassName="myActive" activeStyle={{ color: 'red',textDecoration: 'underline' }} > Home </NavLink>
+
+a.active { 
+	color: 'red';
+} 
+...............................................................
+
+Passing Route Parameters:
+........................ 
+
+key property should be in outermost element
+
+import { Link  } from 'react-router-dom'
+
+<Link to={ '/' + post.id} key={post.id}> 
+	<Post  />
+<Link>
+
+<Route path="/:id" exact component={ posts } />  
+
+fullpost.js
+............
+this.props.match.params.id
+
+...............................................................
+
+Switch to load single componeent route
+......................................
+import { Link, Switch  } from 'react-router-dom'
+
+render only one component which matches the route
+<Switch>
+	<Route path="/:id" exact component={ Posts } />  
+	<Route path="/newpost" component={ NewPost } />  
+</Switch>
+ 
+.............................................................. 
+Experiment 40: named imports and default imports
+
+import component , { myVar } from 'abc/abc';
+
+abc.js
+......
+
+export const myVar=10; // named export
+
+export default component ; // default export
+
+..............................................................  
+
+This version uses propTypes as a property on the actual MyComponent class instead of a property as part of the createClass definition Object. 
+The getDefaultProps has now changed to just an Object property on the class called defaultProps, as it's no longer a "get" function, it's just an Object.
+
+
+
+React project dependancies
+...........................
+
+npm i --save bootstrap@4.3.1 chart.js@2.7.2 prop-types react-chartjs-2 react-component-queries react-icons react-router-dom victory reactstrap
+
+
+index.js
+........
+import 'bootstrap/dist/css/bootstrap.css';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+    https://www.youtube.com/user/tekacademylabs  
+    Advanced React Component tutorials (as a followup for the courses)
+
+    https://www.youtube.com/watch?v=W-gzXKEziik&list=PLNIn9uF_2Il67Pc2rC_UDD2zhroWnr5eZ  
+
+    Code your own Redux:
+    https://jsbin.com/wamocaf/11/edit?js,output 
+
+     
+
+    Fetch data from remote API
+    https://jsbin.com/pixelow/5/edit?js,output 
+
+
+    React Modal Dialog with Portal
+    https://codepen.io/rajeshpillai/pen/WVQvzO?editors=0010 
+     
+
+    React Useful Hooks
+    https://usehooks.com/ 
+
+     
+    Source code Repo:
+    https://github.com/rajeshpillai/react-training-internal 
+
+*/
+...................................................................
+
+import React from 'react';
+import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FaHome } from 'react-icons/fa';
+import styled from 'styled-components';
+
+function App() {
+  return (
+    <div className="App">
+        <FaHome />
+        <h1 className="text-title">Shree Swami Samartha</h1>
+        <Button>Hello Styled Component</Button>
+    </div>
+  );
+}
+
+const Button = styled.button`
+color: red;
+background: grey;
+`
+
+export default App;
+...................................................................
+
+<Button large>Hello Styled Component</Button>
+
+const Button = styled.button`
+color: red;
+background: grey;
+font-size: ${ (props) => props.large ? '3rem' : '1rem'  };
+`
+
+..................................................................
+
+
+
+
+
